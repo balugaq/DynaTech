@@ -3,6 +3,7 @@ package me.profelements.dynatech.fluids;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.balugaq.compatibility.MinecraftVersion;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
@@ -19,18 +20,26 @@ public class FluidTankAdapter {
 
     public static @Nullable FluidStack getFluidFromItemStack(@Nonnull ItemStack itemStack) {
         switch (itemStack.getType()) {
-            case Material.WATER_BUCKET:
+            case WATER_BUCKET:
                 return FluidStack.of(FluidStack.WATER_FLUID, FluidStack.BUCKET_AMOUNT);
-            case Material.MILK_BUCKET:
+            case MILK_BUCKET:
                 return FluidStack.of(FluidStack.MILK_FLUID, FluidStack.BUCKET_AMOUNT);
-            case Material.LAVA_BUCKET:
+            case LAVA_BUCKET:
                 return FluidStack.of(FluidStack.LAVA_FLUID, FluidStack.BUCKET_AMOUNT);
-            case Material.POTION:
+            case POTION:
                 if (itemStack.getItemMeta() instanceof PotionMeta pm) {
-                    if (pm.getBasePotionType() == PotionType.WATER) {
-                        return FluidStack.of(FluidStack.WATER_FLUID, FluidStack.BOTTLE_AMOUNT);
+                    if (MinecraftVersion.AT_LEAST_1_20_5) {
+                        if (pm.getBasePotionType() == PotionType.WATER) {
+                            return FluidStack.of(FluidStack.WATER_FLUID, FluidStack.BOTTLE_AMOUNT);
+                        } else {
+                            return FluidStack.of(FluidStack.POTION_FLUID, FluidStack.BOTTLE_AMOUNT);
+                        }
                     } else {
-                        return FluidStack.of(FluidStack.POTION_FLUID, FluidStack.BOTTLE_AMOUNT);
+                        if (pm.getBasePotionData().getType() == PotionType.WATER) {
+                            return FluidStack.of(FluidStack.WATER_FLUID, FluidStack.BOTTLE_AMOUNT);
+                        } else {
+                            return FluidStack.of(FluidStack.POTION_FLUID, FluidStack.BOTTLE_AMOUNT);
+                        }
                     }
                 }
             default:
@@ -41,11 +50,11 @@ public class FluidTankAdapter {
     public static @Nullable FluidStack getFluidStackFromBlock(@Nonnull Block block) {
         Preconditions.checkNotNull(block);
         switch (block.getType()) {
-            case Material.LAVA_CAULDRON:
+            case LAVA_CAULDRON:
                 return FluidStack.of(FluidStack.LAVA_FLUID, FluidStack.BUCKET_AMOUNT);
-            case Material.WATER_CAULDRON:
-            case Material.WATER:
-            case Material.LAVA:
+            case WATER_CAULDRON:
+            case WATER:
+            case LAVA:
                 return getFluidStackFromLevelled(block);
             default:
                 return null;
@@ -71,9 +80,9 @@ public class FluidTankAdapter {
         // This is either Material.LAVA, or Material.WATER
         if (lvl.getLevel() == 0) {
             switch (block.getType()) {
-                case Material.WATER:
+                case WATER:
                     return FluidStack.of(FluidStack.WATER_FLUID, FluidStack.BUCKET_AMOUNT);
-                case Material.LAVA:
+                case LAVA:
                     return FluidStack.of(FluidStack.LAVA_FLUID, FluidStack.BUCKET_AMOUNT);
                 default:
                     return null;

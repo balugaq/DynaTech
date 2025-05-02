@@ -1,5 +1,6 @@
 package me.profelements.dynatech.items.tools;
 
+import com.balugaq.compatibility.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -52,10 +53,18 @@ public class DimensionalHome extends SlimefunItem {
                             Location dimHomeLocation = new Location(DIM_HOME_WORLD, 16 * chunkKey + 8d, 65, 8);
                             PaperLib.teleportAsync(p, dimHomeLocation);
                         } else {
-                            if (p.getRespawnLocation() != null) {
-                                PaperLib.teleportAsync(p, p.getRespawnLocation());
+                            if (MinecraftVersion.AT_LEAST_1_20_4) {
+                                if (p.getRespawnLocation() != null) {
+                                    PaperLib.teleportAsync(p, p.getRespawnLocation());
+                                } else {
+                                    PaperLib.teleportAsync(p, Bukkit.getServer().getWorlds().get(0).getSpawnLocation());
+                                }
                             } else {
-                                PaperLib.teleportAsync(p, Bukkit.getServer().getWorlds().get(0).getSpawnLocation());
+                                if (p.getBedSpawnLocation() != null) {
+                                    PaperLib.teleportAsync(p, p.getBedSpawnLocation());
+                                } else {
+                                    PaperLib.teleportAsync(p, Bukkit.getServer().getWorlds().get(0).getSpawnLocation());
+                                }
                             }
                         }
                     } else {

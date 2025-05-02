@@ -3,3 +3,5 @@ options:
     auto-update: false
     # 是否禁用异次元之家
     disable-dimensionalhome-world: false
+    # 是否在物品id前增加 DYNATECH_ 前缀
+    prefix-dynatech: false

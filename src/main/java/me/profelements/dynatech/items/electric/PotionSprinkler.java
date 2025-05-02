@@ -1,5 +1,6 @@
 package me.profelements.dynatech.items.electric;
 
+import com.balugaq.compatibility.MinecraftVersion;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -23,7 +24,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
@@ -111,13 +111,23 @@ public class PotionSprinkler extends AbstractElectricTicker {
         ItemStack item = menu.getItemInSlot(13);
 
         if (item != null && item.getType() == Material.POTION && item.hasItemMeta() && item.getItemMeta() instanceof PotionMeta potionMeta) {
-            PotionType pt = potionMeta.getBasePotionType();
+            PotionType pt;
+            if (MinecraftVersion.AT_LEAST_1_20_5) {
+                pt = potionMeta.getBasePotionType();
+            } else {
+                pt = potionMeta.getBasePotionData().getType();
+            }
             for (Entity ent : b.getWorld().getNearbyEntities(b.getLocation(), 10, 10, 10, LivingEntity.class::isInstance)) {
                 LivingEntity p = (LivingEntity) ent;
                 if (!enabledEntities.get(b.getLocation()).contains(p.getUniqueId())) {
                     int amplifier = (!pt.isUpgradeable()) ? 1 : 0;
                     int duration = (!pt.isExtendable()) ? 9600 : 3600;
-                    PotionEffectType pet = pt.getPotionEffects().get(0).getType();
+                    PotionEffectType pet;
+                    if (MinecraftVersion.AT_LEAST_1_20_5) {
+                        pet = pt.getPotionEffects().get(0).getType();
+                    } else {
+                        pet = pt.getEffectType();
+                    }
 
                     if (pet != null) {
                         PotionEffect pe = new PotionEffect(pet, duration, amplifier);

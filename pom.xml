@@ -10,12 +10,16 @@
     <name>DynaTech</name>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <repositories>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repo/repository/maven-public/</url>
+        </repository>
         <repository>
             <id>paper-repo</id>
             <url>https://repo.destroystokyo.com/repository/maven-public/</url>

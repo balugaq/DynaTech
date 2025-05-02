@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
+import me.profelements.dynatech.DynaTech;
 import org.bukkit.NamespacedKey;
 
 public record TypedKey<T>(@Nonnull NamespacedKey key) {
@@ -17,6 +18,11 @@ public record TypedKey<T>(@Nonnull NamespacedKey key) {
 
     // THIS IS TEMPORARY TILL SLIMEFUN MOVES TO NamespacedKey
     public String asSlimefunId() {
-        return this.key().toString().replace(':', '_').toUpperCase(Locale.ROOT);
+        String raw = this.key().toString().replace(':', '_').toUpperCase(Locale.ROOT);
+        if (!DynaTech.getInstance().getConfig().getBoolean("options.prefix-dynatech") && raw.startsWith("DYNATECH_")) {
+            return raw.substring(9);
+        }
+
+        return raw;
     }
 }

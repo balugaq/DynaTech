@@ -199,8 +199,9 @@ public class Tesseract extends SlimefunItem implements EnergyNetProvider {
 
         im.lore(lore);
         knowledgePane.setItemMeta(im);
+        knowledgePane.setType(Material.RED_STAINED_GLASS_PANE);
 
-        menu.replaceExistingItem(4, knowledgePane.withType(Material.RED_STAINED_GLASS_PANE));
+        menu.replaceExistingItem(4, knowledgePane);
     }
 
     // Boilerplate for machines.

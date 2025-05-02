@@ -1,6 +1,6 @@
 package me.profelements.dynatech.items.electric.growthchambers;
 
-import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
+import com.balugaq.compatibility.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -99,7 +99,7 @@ public class GrowthChamberMK2 extends AbstractElectricMachine {
         registerRecipe(30, new ItemStack[] {new ItemStack(Material.ACACIA_SAPLING)}, new ItemStack[] {new ItemStack(Material.ACACIA_SAPLING, 9), new ItemStack(Material.ACACIA_LOG, 18), new ItemStack(Material.APPLE, 6), new ItemStack(Material.ACACIA_LEAVES, 9), new ItemStack(Material.STICK, 6)});
         registerRecipe(30, new ItemStack[] {new ItemStack(Material.MANGROVE_PROPAGULE)}, new ItemStack[] {new ItemStack(Material.MANGROVE_PROPAGULE, 9), new ItemStack(Material.MANGROVE_LOG, 18), new ItemStack(Material.MANGROVE_LEAVES, 9) });
 
-        if (Slimefun.getMinecraftVersion().isAtLeast(MinecraftVersion.MINECRAFT_1_20)) {
+        if (MinecraftVersion.AT_LEAST_1_20) {
             registerRecipe(30, new ItemStack[] {new ItemStack(Material.CHERRY_SAPLING)}, new ItemStack[] {new ItemStack(Material.CHERRY_SAPLING, 9), new ItemStack(Material.CHERRY_LOG, 18), new ItemStack(Material.CHERRY_LEAVES, 9)});
         }
     }

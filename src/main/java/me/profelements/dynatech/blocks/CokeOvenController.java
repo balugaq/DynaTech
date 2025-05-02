@@ -275,18 +275,13 @@ public class CokeOvenController extends SlimefunItem {
     }
 
     private BlockFace rotateCounterClockwise(BlockFace facing) {
-        switch (facing) {
-            case BlockFace.NORTH:
-                return BlockFace.WEST;
-            case BlockFace.EAST:
-                return BlockFace.NORTH;
-            case BlockFace.SOUTH:
-                return BlockFace.EAST;
-            case BlockFace.WEST:
-                return BlockFace.SOUTH;
-            default:
-                return BlockFace.SELF;
-        }
+        return switch (facing) {
+            case NORTH -> BlockFace.WEST;
+            case EAST -> BlockFace.NORTH;
+            case SOUTH -> BlockFace.EAST;
+            case WEST -> BlockFace.SOUTH;
+            default -> BlockFace.SELF;
+        };
     }
 
     Predicate<Block>[][][] getMultiblockPattern() {
